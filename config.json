@@ -1,0 +1,50 @@
+{
+  "extensions": [".cpp", ".c", ".h", ".hpp", ".ino", ".pde"],
+  "exclude_dirs": [
+    ".git", 
+    ".vscode", 
+    ".vs",
+    "build", 
+    "libraries", 
+    "__pycache__", 
+    ".pio", 
+    ".platformio",
+    "node_modules", 
+    "dist", 
+    "obj", 
+    "bin",
+    "Debug",
+    "Release",
+    ".idea"
+  ],
+  "exclude_files": [
+    "*.tmp", 
+    "*.bak", 
+    "*.log", 
+    "*.swp",
+    "*.swo",
+    "*~",
+    "Thumbs.db",
+    ".DS_Store"
+  ],
+  "project_types": {
+    "arduino": [".ino", ".pde"],
+    "platformio": ["platformio.ini"],
+    "cmake": ["CMakeLists.txt"],
+    "makefile": ["Makefile", "makefile"],
+    "esp32": ["sdkconfig"],
+    "esp8266": ["eagle.flash.bin"]
+  },
+  "analysis_options": {
+    "detect_complexity": true,
+    "track_dependencies": true,
+    "find_unused_functions": false,
+    "analyze_memory_usage": true
+  },
+  "report_options": {
+    "max_files_in_chart": 15,
+    "max_todos_displayed": 50,
+    "include_file_tree": true,
+    "generate_dependency_graph": false
+  }
+}

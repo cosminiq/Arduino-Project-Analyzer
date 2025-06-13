@@ -1,0 +1,854 @@
+
+    <!DOCTYPE html>
+    <html lang="ro">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Raport Complexitate - Arduino Project</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .complexity-card {
+                border-left: 4px solid;
+                transition: transform 0.2s;
+            }
+            .complexity-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+            .success-border { border-left-color: #28a745; }
+            .warning-border { border-left-color: #ffc107; }
+            .danger-border { border-left-color: #dc3545; }
+            .metric-icon {
+                font-size: 2rem;
+                opacity: 0.8;
+            }
+            .chart-container {
+                position: relative;
+                height: 300px;
+                margin: 20px 0;
+            }
+            body {
+                background-color: #f8f9fa;
+            }
+            .main-card {
+                border: none;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card main-card">
+                        <div class="card-header bg-primary text-white">
+                            <h1 class="mb-0">
+                                <i class="fas fa-code me-2"></i>
+                                Raport Complexitate Cod Arduino
+                            </h1>
+                            <p class="mb-0 mt-2">Proiect: <strong>Arduino Project</strong></p>
+                            <small>Generat pe: 11/06/2025 00:08:39</small>
+                        </div>
+                        <div class="card-body">
+                            
+                            <!-- Statistici Generale -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h3><i class="fas fa-chart-bar me-2"></i>Statistici Generale</h3>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card complexity-card success-border h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-file-code metric-icon text-primary mb-2"></i>
+                                            <h4 class="card-title">58</h4>
+                                            <p class="card-text">Fișiere analizate</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card complexity-card success-border h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-lines-leaning metric-icon text-success mb-2"></i>
+                                            <h4 class="card-title">5,636</h4>
+                                            <p class="card-text">Linii de cod</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card complexity-card warning-border h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-comment-dots metric-icon text-info mb-2"></i>
+                                            <h4 class="card-title">446</h4>
+                                            <p class="card-text">Comentarii</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card complexity-card success-border h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-function metric-icon text-warning mb-2"></i>
+                                            <h4 class="card-title">35</h4>
+                                            <p class="card-text">Funcții totale</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Analiza Complexității -->
+                            <div class="row mb-4">
+                                <div class="col-md-8">
+                                    <h3><i class="fas fa-brain me-2"></i>Analiza Complexității</h3>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card complexity-card danger-border h-100">
+                                                <div class="card-body">
+                                                    <h5>Complexitate Maximă</h5>
+                                                    <h2 class="text-danger">136</h2>
+                                                    <span class="badge bg-danger">RIDICATĂ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card complexity-card success-border h-100">
+                                                <div class="card-body">
+                                                    <h5>Complexitate Medie</h5>
+                                                    <h2 class="text-primary">12.62</h2>
+                                                    <small class="text-muted">Pe toate fișierele</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>Distribuția Complexității</h3>
+                                    <div class="chart-container">
+                                        <canvas id="complexityChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tabel Detaliat Fișiere -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3><i class="fas fa-table me-2"></i>Detalii Fișiere</h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>Fișier</th>
+                                                    <th>LOC</th>
+                                                    <th>Comentarii</th>
+                                                    <th>Complexitate</th>
+                                                    <th>Funcții</th>
+                                                    <th>Max Func</th>
+                                                    <th>Avg Func</th>
+                                                    <th>Adâncime</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+            <tr class="table-danger">
+                <td><strong>littlefs_interactive_menu.cpp</strong></td>
+                <td>603</td>
+                <td>43</td>
+                <td><span class="badge bg-danger">136</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>catching_NTP.cpp</strong></td>
+                <td>284</td>
+                <td>34</td>
+                <td><span class="badge bg-danger">49</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>uart_commands.cpp</strong></td>
+                <td>173</td>
+                <td>0</td>
+                <td><span class="badge bg-danger">47</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>file_browser_page.cpp</strong></td>
+                <td>353</td>
+                <td>24</td>
+                <td><span class="badge bg-danger">46</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>5</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>comm_UART.cpp</strong></td>
+                <td>411</td>
+                <td>60</td>
+                <td><span class="badge bg-danger">46</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>6</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>usb_commands.cpp</strong></td>
+                <td>135</td>
+                <td>0</td>
+                <td><span class="badge bg-danger">44</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>control_button.cpp</strong></td>
+                <td>233</td>
+                <td>11</td>
+                <td><span class="badge bg-danger">44</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>info_display.cpp</strong></td>
+                <td>249</td>
+                <td>4</td>
+                <td><span class="badge bg-danger">43</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>display_interactive_menu.cpp</strong></td>
+                <td>355</td>
+                <td>40</td>
+                <td><span class="badge bg-danger">40</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>neopixel_effects.cpp</strong></td>
+                <td>319</td>
+                <td>28</td>
+                <td><span class="badge bg-danger">39</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>7</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>file_browser_controls.cpp</strong></td>
+                <td>149</td>
+                <td>2</td>
+                <td><span class="badge bg-danger">32</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+            </tr>
+            
+            <tr class="table-danger">
+                <td><strong>commands.cpp</strong></td>
+                <td>191</td>
+                <td>8</td>
+                <td><span class="badge bg-danger">30</span></td>
+                <td>3</td>
+                <td>28</td>
+                <td>10.67</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-warning">
+                <td><strong>media_page.cpp</strong></td>
+                <td>218</td>
+                <td>10</td>
+                <td><span class="badge bg-warning">16</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+            </tr>
+            
+            <tr class="table-warning">
+                <td><strong>fs_scanner.cpp</strong></td>
+                <td>89</td>
+                <td>32</td>
+                <td><span class="badge bg-warning">12</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+            </tr>
+            
+            <tr class="table-warning">
+                <td><strong>comenzi_in_clar.cpp</strong></td>
+                <td>194</td>
+                <td>19</td>
+                <td><span class="badge bg-warning">12</span></td>
+                <td>4</td>
+                <td>3</td>
+                <td>3</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>catch_openweathermap.cpp</strong></td>
+                <td>94</td>
+                <td>11</td>
+                <td><span class="badge bg-success">10</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>files_page.cpp</strong></td>
+                <td>64</td>
+                <td>2</td>
+                <td><span class="badge bg-success">9</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>clock.cpp</strong></td>
+                <td>77</td>
+                <td>9</td>
+                <td><span class="badge bg-success">9</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>5</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>system_page.cpp</strong></td>
+                <td>55</td>
+                <td>7</td>
+                <td><span class="badge bg-success">8</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>system_state.cpp</strong></td>
+                <td>60</td>
+                <td>0</td>
+                <td><span class="badge bg-success">6</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>commands_page.cpp</strong></td>
+                <td>38</td>
+                <td>1</td>
+                <td><span class="badge bg-success">4</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>main_files_modul.cpp</strong></td>
+                <td>85</td>
+                <td>1</td>
+                <td><span class="badge bg-success">4</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>system_monitor.cpp</strong></td>
+                <td>26</td>
+                <td>0</td>
+                <td><span class="badge bg-success">3</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>command_manager.cpp</strong></td>
+                <td>23</td>
+                <td>1</td>
+                <td><span class="badge bg-success">3</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>comm_page.cpp</strong></td>
+                <td>44</td>
+                <td>1</td>
+                <td><span class="badge bg-success">3</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>weather_page.cpp</strong></td>
+                <td>31</td>
+                <td>1</td>
+                <td><span class="badge bg-success">2</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>comm_UART.h</strong></td>
+                <td>86</td>
+                <td>18</td>
+                <td><span class="badge bg-success">2</span></td>
+                <td>4</td>
+                <td>2</td>
+                <td>1.25</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>periodic_wemos.cpp</strong></td>
+                <td>31</td>
+                <td>0</td>
+                <td><span class="badge bg-success">2</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>clock_page.cpp</strong></td>
+                <td>23</td>
+                <td>1</td>
+                <td><span class="badge bg-success">2</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>display_config.h</strong></td>
+                <td>31</td>
+                <td>5</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>file_browser_page.h</strong></td>
+                <td>39</td>
+                <td>2</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>system_monitor.h</strong></td>
+                <td>18</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>neopixel_effects.h</strong></td>
+                <td>78</td>
+                <td>13</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>3</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>display_utils.cpp</strong></td>
+                <td>49</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>5</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>catch_openweathermap.h</strong></td>
+                <td>27</td>
+                <td>1</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>2</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>clock.h</strong></td>
+                <td>22</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>info_display.h</strong></td>
+                <td>84</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>6</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>files_page.h</strong></td>
+                <td>19</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>comenzi_in_clar.h</strong></td>
+                <td>26</td>
+                <td>6</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>catching_NTP.h</strong></td>
+                <td>50</td>
+                <td>1</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>commands.h</strong></td>
+                <td>9</td>
+                <td>1</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>periodic_wemos.h</strong></td>
+                <td>21</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>clock_page.h</strong></td>
+                <td>17</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>commands_page.h</strong></td>
+                <td>15</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>system_state.h</strong></td>
+                <td>29</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>display_utils.h</strong></td>
+                <td>10</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>system_page.h</strong></td>
+                <td>17</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>comm_page.h</strong></td>
+                <td>18</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>uart_commands.h</strong></td>
+                <td>31</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>control_button.h</strong></td>
+                <td>69</td>
+                <td>15</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>display_interactive_menu.h</strong></td>
+                <td>82</td>
+                <td>13</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>5</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>usb_commands.h</strong></td>
+                <td>26</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>file_browser_controls.h</strong></td>
+                <td>19</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>littlefs_interactive_menu.h</strong></td>
+                <td>52</td>
+                <td>11</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>weather_page.h</strong></td>
+                <td>15</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>command_manager.h</strong></td>
+                <td>17</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>fs_scanner.h</strong></td>
+                <td>25</td>
+                <td>10</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr class="table-success">
+                <td><strong>media_page.h</strong></td>
+                <td>28</td>
+                <td>0</td>
+                <td><span class="badge bg-success">1</span></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recomandări -->
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <h3><i class="fas fa-lightbulb me-2"></i>Recomandări</h3>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="list-unstyled">
+                                                <li class="mb-2">
+                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                    <strong>Complexitate 1-10:</strong> Cod simplu, ușor de menținut
+                                                </li>
+                                                <li class="mb-2">
+                                                    <i class="fas fa-exclamation-circle text-warning me-2"></i>
+                                                    <strong>Complexitate 11-20:</strong> Cod moderat, necesită atenție pentru refactorizare
+                                                </li>
+                                                <li class="mb-2">
+                                                    <i class="fas fa-times-circle text-danger me-2"></i>
+                                                    <strong>Complexitate >20:</strong> Cod foarte complex, refactorizare urgentă recomandată
+                                                </li>
+                                            </ul>
+                                            <div class="alert alert-warning mt-3"><i class="fas fa-exclamation-triangle me-2"></i><strong>Atenție:</strong> 12 fișier(e) au complexitate ridicată și necesită refactorizare.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Grafic distribuția complexității
+            const ctx = document.getElementById('complexityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Scăzută (≤10)', 'Moderată (11-20)', 'Ridicată (>20)'],
+                    datasets: [{
+                        data: [43, 3, 12],
+                        backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+    </html>
+    
