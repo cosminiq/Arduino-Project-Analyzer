@@ -251,6 +251,6 @@ Pentru probleme sau întrebări:
 
 ---
 
-**Autor**: Arduino Project Analyzer Team  
+**Autor**: krux 
 **Versiune**: 1.0.0  
 **Data**: 2025
